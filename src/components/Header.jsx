@@ -10,7 +10,7 @@ import {
 } from "../utils/constant";
 import { searchAction } from "../utils/store/searchSlice";
 import { searchResultsAction } from "../utils/store/searchResultsSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [searchSuggestion, setSearchSuggestion] = useState([]);
@@ -18,9 +18,12 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestion, setShowSuggestion] = useState(false);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const handleToggleMenu = () => {
     dispatch(toggleAction.toggleMenu());
+    console.log("toggle menu");
   };
 
   const search = useSelector((state) => state.search);
@@ -50,8 +53,11 @@ const Header = () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
+  // -----------------------------------end-------
 
-  // fetch data by search keyword
+
+
+  // fetch data by search keyword----start
   const fetchSearchResults = async () => {
     const res = await fetch(SEARCH_BY_KEYWORD_API + searchQuery);
     const data = await res.json();
@@ -60,16 +66,21 @@ const Header = () => {
     console.log(data.items);
   };
   const handleSearch = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
+    console.log("first")
     fetchSearchResults();
+    if (searchQuery) navigate("/search");
   };
+  // --------------------end----------------
+  // useEffect(() => handleSearch(), [])
 
   return (
-    <nav className=" px-5 shadow-lg flex h-[50px] items-center justify-between">
+    <nav className=" px-5 shadow-lg flex h-[60px] items-center justify-between">
       <div className=" flex items-center gap-6 text-3xl">
         <AiOutlineMenu onClick={handleToggleMenu} className=" cursor-pointer" />
-        <ImYoutube2 className=" text-7xl cursor-pointer" />
+        <ImYoutube2 onClick={() => navigate("/")} className=" text-7xl cursor-pointer" />
       </div>
+
       <div>
         <form
           onSubmit={handleSearch}
@@ -79,28 +90,34 @@ const Header = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             type="text"
-            className=" w-[90%] focus:outline-none"
+            className=" w-[90%] focus:outline-none p-2"
             onFocus={() => setShowSuggestion(true)}
             onBlur={() => setShowSuggestion(false)}
           />
-          <Link to={"/search"}>
-            <button
-              type="submit"
-              className=" w-[10%] pl-2 h-full text-2xl cursor-pointer bg-gray-200"
-            >
-              <AiOutlineSearch />
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className=" w-[10%] pl-2 h-full text-2xl cursor-pointer bg-gray-200"
+          >
+            <AiOutlineSearch />
+          </button>
         </form>
+      
+      {/* search suggestion */}
         {showSuggestion && (
           <ul className=" fixed bg-white w-96  shadow-md rounded-md">
             {searchSuggestion.map((item, index) => (
-              <li className=" py-1 px-2 hover:bg-slate-200" key={index}>
+              <li onClick={() => {
+                setSearchQuery(item)
+                setShowSuggestion(false)
+                handleSearch()
+              }
+                } className=" py-1 px-2 hover:bg-slate-200" key={index}>
                 {item}
               </li>
             ))}
           </ul>
         )}
+
       </div>
       <div className=" text-4xl cursor-pointer">
         <BiUserCircle />

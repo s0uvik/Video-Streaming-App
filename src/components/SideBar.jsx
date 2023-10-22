@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SideBar = () => {
 
   return (
-    <div className="border shadow-lg h-[700px] px-9">
+    <div className="border shadow-lg h-[1500px] px-9">
       <ul>
         <Link to={"/"}>
           <li className=" mt-3 mb-2 cursor-pointer pl-5">Home</li>

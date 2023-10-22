@@ -11,9 +11,12 @@ const SearchResultContainer = () => {
 
   return (
     <div className=" mt-4 flex flex-wrap justify-center gap-4">
-      search
       {searchResults?.map((item) => {
-        return <VideoCard key={item.id} videoInfo={item} />;
+        return (
+          <Link key={item.id.videoId} to={"/watch?v=" + item.id.videoId}>
+            <VideoCard videoInfo={item} />
+          </Link>
+        );
       })}
     </div>
   );

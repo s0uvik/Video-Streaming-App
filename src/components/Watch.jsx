@@ -1,14 +1,9 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import LiveChat from "./LiveChat";
-import { useDispatch } from "react-redux";
-import { toggleAction } from "../utils/store/menuToggleSlice";
-
 const Watch = () => {
   const [searchParams] = useSearchParams();
   
-  const dispatch = useDispatch()
-  dispatch(toggleAction.hideMenu())
 
   return (
     <div className=" flex justify-center gap-9 w-full mt-4 m-2">
