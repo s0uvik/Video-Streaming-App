@@ -35,6 +35,7 @@ const Header = () => {
     const res = await fetch(SEARCH_SUGGESTIONS_API + searchQuery);
     const data = await res.json();
     setSearchSuggestion(data[1]);
+    console.log(data);
     dispatch(
       searchAction.storeSuggestion({
         [searchQuery]: data[1],
