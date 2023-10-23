@@ -1,7 +1,11 @@
 import "./App.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import { BrowserRouter, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import VideoContainer from "./components/VideoContainer";
 import Watch from "./components/Watch";
 import SearchResultContainer from "./components/SearchResultContainer";
@@ -30,6 +34,10 @@ function App() {
 
   return (
     <>
+      <marquee>
+        YouTube API have limited request limit, so time youtube forbidden our
+        api request{" "}
+      </marquee>
       <BrowserRouter>
         <Header />
         <Body />

@@ -55,8 +55,6 @@ const Header = () => {
   }, [searchQuery]);
   // -----------------------------------end-------
 
-
-
   // fetch data by search keyword----start
   const fetchSearchResults = async () => {
     const res = await fetch(SEARCH_BY_KEYWORD_API + searchQuery);
@@ -67,7 +65,7 @@ const Header = () => {
   };
   const handleSearch = (e) => {
     e?.preventDefault();
-    console.log("first")
+    console.log("first");
     fetchSearchResults();
     if (searchQuery) navigate("/search");
   };
@@ -75,10 +73,13 @@ const Header = () => {
   // useEffect(() => handleSearch(), [])
 
   return (
-    <nav className=" px-5 shadow-lg flex h-[60px] items-center justify-between">
+    <nav className=" border-t-2 px-5 shadow-lg flex h-[60px] items-center justify-between">
       <div className=" flex items-center gap-6 text-3xl">
         <AiOutlineMenu onClick={handleToggleMenu} className=" cursor-pointer" />
-        <ImYoutube2 onClick={() => navigate("/")} className=" text-7xl cursor-pointer" />
+        <ImYoutube2
+          onClick={() => navigate("/")}
+          className=" text-7xl cursor-pointer"
+        />
       </div>
 
       <div>
@@ -92,7 +93,7 @@ const Header = () => {
             type="text"
             className=" w-[90%] focus:outline-none p-2"
             onFocus={() => setShowSuggestion(true)}
-            onBlur={() => setShowSuggestion(false)}
+            // onBlur={() => setShowSuggestion(false)}
           />
           <button
             type="submit"
@@ -101,23 +102,29 @@ const Header = () => {
             <AiOutlineSearch />
           </button>
         </form>
-      
-      {/* search suggestion */}
+
+        {/* search suggestion */}
         {showSuggestion && (
-          <ul className=" fixed bg-white w-96  shadow-md rounded-md">
+          <ul
+            onClose={() => setShowSuggestion(false)}
+            className=" fixed bg-white w-96  shadow-md rounded-md"
+          >
             {searchSuggestion.map((item, index) => (
-              <li onClick={() => {
-                setSearchQuery(item)
-                setShowSuggestion(false)
-                handleSearch()
-              }
-                } className=" py-1 px-2 hover:bg-slate-200" key={index}>
+              <li
+                onClick={() => {
+                  setSearchQuery(item);
+                  console.log(item);
+                  setShowSuggestion(false);
+                  handleSearch();
+                }}
+                className=" py-1 px-2 hover:bg-slate-200 cursor-pointer"
+                key={index}
+              >
                 {item}
               </li>
             ))}
           </ul>
         )}
-
       </div>
       <div className=" text-4xl cursor-pointer">
         <BiUserCircle />

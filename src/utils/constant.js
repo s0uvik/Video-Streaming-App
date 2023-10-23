@@ -1,5 +1,5 @@
-const MY_API_KEY = "AIzaSyDZ98ZrHVzvGG0NUUcrEAI-4DT2oxEPngY";
-const MY_API_KEY_2 = "AIzaSyAziYvxwSMAzW8mXzSlO1fMvYS_8ctUDLY";
+const MY_API_KEY = import.meta.env.VITE_API_KEY_1;
+const MY_API_KEY_2 = import.meta.env.VITE_API_KEY_2;
 
 const YOUTUBE_API =
   "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=IN&maxResults=50&key=" +
