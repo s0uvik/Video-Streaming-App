@@ -3,7 +3,7 @@ import React from "react";
 const VideoCard = ({ videoInfo }) => {
   // console.log(videoInfo);
   return (
-    <div className=" rounded-md w-[350px] h-[350px] flex flex-col items-center shadow-lg p-2 overflow-hidden">
+    <div className=" rounded-md md:w-[350px] w-[300px] min-h-[330px]  flex flex-col items-center shadow-lg p-2 overflow-hidden">
       <img
         className=" w-full"
         src={videoInfo.snippet.thumbnails.medium.url}

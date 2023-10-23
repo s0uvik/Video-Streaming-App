@@ -35,8 +35,8 @@ function App() {
   return (
     <>
       <marquee>
-        YouTube API have limited request limit, so time youtube forbidden our
-        api request{" "}
+        YouTube API have limited request limit, so some time youtube forbidden
+        our api request{" "}
       </marquee>
       <BrowserRouter>
         <Header />

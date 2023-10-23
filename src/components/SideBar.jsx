@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
-
   return (
     <div className="border shadow-lg h-[1500px] px-9">
       <ul>

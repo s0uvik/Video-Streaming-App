@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { ImYoutube2 } from "react-icons/im";
 import { BiUserCircle } from "react-icons/bi";
+import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleAction } from "../utils/store/menuToggleSlice";
 import {
@@ -17,6 +18,7 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
 
   const navigate = useNavigate();
 
@@ -73,62 +75,127 @@ const Header = () => {
   // useEffect(() => handleSearch(), [])
 
   return (
-    <nav className=" border-t-2 px-5 shadow-lg flex h-[60px] items-center justify-between">
-      <div className=" flex items-center gap-6 text-3xl">
-        <AiOutlineMenu onClick={handleToggleMenu} className=" cursor-pointer" />
-        <ImYoutube2
-          onClick={() => navigate("/")}
-          className=" text-7xl cursor-pointer"
-        />
-      </div>
-
-      <div>
-        <form
-          onSubmit={handleSearch}
-          className=" h-[30px] w-[400px] flex border items-center rounded-lg overflow-hidden"
-        >
-          <input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            type="text"
-            className=" w-[90%] focus:outline-none p-2"
-            onFocus={() => setShowSuggestion(true)}
-            // onBlur={() => setShowSuggestion(false)}
+    <nav>
+      <div className=" border-t-2 px-5 shadow-lg flex h-[60px] items-center justify-between">
+        <div className=" flex items-center gap-6 text-3xl">
+          <AiOutlineMenu
+            onClick={handleToggleMenu}
+            className=" cursor-pointer"
           />
-          <button
-            type="submit"
-            className=" w-[10%] pl-2 h-full text-2xl cursor-pointer bg-gray-200"
-          >
-            <AiOutlineSearch />
-          </button>
-        </form>
+          <ImYoutube2
+            onClick={() => navigate("/")}
+            className=" text-7xl cursor-pointer"
+          />
+        </div>
 
-        {/* search suggestion */}
-        {showSuggestion && (
-          <ul
-            onClose={() => setShowSuggestion(false)}
-            className=" fixed bg-white w-96  shadow-md rounded-md"
+        <div className=" hidden md:flex">
+          <form
+            className={` h-[30px] md:w-[400px] w-[300px]  md:flex hidden border items-center rounded-lg overflow-hidden `}
+            onSubmit={handleSearch}
           >
-            {searchSuggestion.map((item, index) => (
-              <li
-                onClick={() => {
-                  setSearchQuery(item);
-                  console.log(item);
+            <input
+              className=" w-[90%] focus:outline-none p-2"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              type="text"
+              onFocus={() => setShowSuggestion(true)}
+              onBlur={() =>
+                setTimeout(() => {
                   setShowSuggestion(false);
-                  handleSearch();
-                }}
-                className=" py-1 px-2 hover:bg-slate-200 cursor-pointer"
-                key={index}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        )}
+                }, 500)
+              }
+            />
+            <button
+              type="submit"
+              className=" w-[10%] pl-2 h-full text-2xl cursor-pointer bg-gray-200"
+            >
+              <AiOutlineSearch />
+            </button>
+          </form>
+
+          {/* search suggestion */}
+          {showSuggestion && (
+            <ul
+              onClose={() => setShowSuggestion(false)}
+              className=" fixed bg-white w-96  shadow-md rounded-md"
+            >
+              {searchSuggestion.map((item, index) => (
+                <li
+                  onClick={() => {
+                    setSearchQuery(item);
+                    setShowSuggestion(false);
+                    handleSearch();
+                  }}
+                  className=" py-1 px-2 hover:bg-slate-200 cursor-pointer"
+                  key={index}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className=" text-4xl cursor-pointer flex items-center justify-between w-20 gap-6 ">
+          <div
+            className=" text-2xl md:hidden"
+            onClick={() => setSearchBoxVisibility(!searchBoxVisibility)}
+          >
+            {searchBoxVisibility ? <RxCross1 /> : <AiOutlineSearch />}
+          </div>
+          <BiUserCircle />
+        </div>
       </div>
-      <div className=" text-4xl cursor-pointer">
-        <BiUserCircle />
-      </div>
+
+      {searchBoxVisibility && (
+        <div className=" mb-1">
+          <form
+            className={` h-[30px] md:hidden flex  border items-center rounded-lg overflow-hidden `}
+            onSubmit={handleSearch}
+          >
+            <input
+              className=" w-[80%] focus:outline-none p-2"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              type="text"
+              onFocus={() => setShowSuggestion(true)}
+              onBlur={() =>
+                setTimeout(() => {
+                  setShowSuggestion(false);
+                }, 500)
+              }
+            />
+            <button
+              type="submit"
+              className="w-[20%] pl-2 h-full text-2xl cursor-pointer bg-gray-200 flex justify-center items-center"
+            >
+              <AiOutlineSearch />
+            </button>
+          </form>
+
+          {/* search suggestion */}
+          {showSuggestion && (
+            <ul
+              onClose={() => setShowSuggestion(false)}
+              className=" fixed bg-white w-96  shadow-md rounded-md"
+            >
+              {searchSuggestion.map((item, index) => (
+                <li
+                  onClick={() => {
+                    setSearchQuery(item);
+                    setShowSuggestion(false);
+                    handleSearch();
+                  }}
+                  className=" py-1 px-2 hover:bg-slate-200 cursor-pointer"
+                  key={index}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </nav>
   );
 };
