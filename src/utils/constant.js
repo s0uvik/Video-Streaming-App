@@ -6,7 +6,7 @@ const YOUTUBE_API =
   MY_API_KEY;
 
 const SEARCH_SUGGESTIONS_API =
-  "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
+  "http://suggestqueries.google.com/complete/search?ds=yt&q=";
 
 const SEARCH_BY_KEYWORD_API =
   "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key=" +
