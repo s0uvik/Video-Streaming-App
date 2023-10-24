@@ -8,16 +8,17 @@ import SearchResultContainer from "./SearchResultContainer";
 
 const Body = () => {
   const isMenuOpen = useSelector((state) => state.isOpen.isOpen);
-  console.log(isMenuOpen)
 
   return (
-    <div className=" flex">
-      {isMenuOpen && <SideBar />}
+    <div className="flex flex-col md:flex-row justify-between relative top-[70px]">
+      <div>{isMenuOpen && <SideBar />}</div>
+      {/* <SideBar /> */}
+
       <Routes>
-        <Route path="/" element={<VideoContainer />} />
-        <Route path="/watch" element={<Watch />} />
-        <Route path="/search" element={<SearchResultContainer />} />
-      </Routes>
+          <Route path="/" element={<VideoContainer />} />
+          <Route path="/watch" element={<Watch />} />
+          <Route path="/results" element={<SearchResultContainer />} />
+        </Routes>
     </div>
   );
 };

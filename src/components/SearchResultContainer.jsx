@@ -1,13 +1,15 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import VideoCard from "./VideoCard";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import ShimmerUi from "./ShimmerUi";
 
 const SearchResultContainer = () => {
   const searchResults = useSelector(
     (state) => state.searchResults.searchResults
   );
-  console.log(searchResults);
+
+  if (searchResults == null) return <ShimmerUi />;
 
   return (
     <div className=" mt-4 flex flex-wrap justify-center gap-4">

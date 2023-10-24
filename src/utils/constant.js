@@ -13,4 +13,8 @@ const SEARCH_BY_KEYWORD_API =
   MY_API_KEY +
   "&q=";
 
-export { YOUTUBE_API, SEARCH_SUGGESTIONS_API, SEARCH_BY_KEYWORD_API };
+  
+  const SEARCH_BY_ID_API = "GET https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&key=" + MY_API_KEY + "&id="
+
+
+export { YOUTUBE_API, SEARCH_SUGGESTIONS_API, SEARCH_BY_KEYWORD_API, SEARCH_BY_ID_API };

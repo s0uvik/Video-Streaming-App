@@ -34,10 +34,6 @@ function App() {
 
   return (
     <>
-      <marquee>
-        YouTube API have limited request limit, so some time youtube forbidden
-        our api request{" "}
-      </marquee>
       <BrowserRouter>
         <Header />
         <Body />
