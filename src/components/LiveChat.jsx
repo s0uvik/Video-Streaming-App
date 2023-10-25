@@ -5,7 +5,6 @@ import { chatAction } from "../utils/store/chatSlice";
 import { randomName, randomText } from "../utils/helper";
 
 const LiveChat = () => {
-  const [toggleChat, setToggleChat] = useState(false);
   const chat = useSelector((state) => state.chat.chat);
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
@@ -34,33 +33,28 @@ const LiveChat = () => {
   };
 
   return (
-    <div className=" mb-4 mr-4 w-[400px] max-h-[600px] bg-slate-200 rounded-md flex flex-col justify-between gap-2">
-      <h1
-        onClick={() => setToggleChat(!toggleChat)}
-        className=" cursor-pointer ml-3 mt-2 font-semibold text-xl pb-2 "
-      >
-        Live Chat {toggleChat ?"⬆️": "⬇️"}
+    <div className=" border w-[97%] lg:w-[500px] ">
+      <h1 className=" cursor-pointer font-semibold text-xl pl-6 p-3 bg-slate-100 w-full border ">
+        Live Chat
       </h1>
-      {toggleChat && (
-        <div className="overflow-y-scroll">
-          <div className=" ml-2 p-2 justify-self-start flex flex-col-reverse">
-            {chat.map((item, index) => (
-              <Chat key={index} data={item} />
-            ))}
-          </div>
+
+      <div className="overflow-y-scroll bg-slate-100 w-full border h-[550px]">
+        <div className=" ml-2 p-2 justify-self-start flex flex-col-reverse">
+          {chat.map((item, index) => (
+            <Chat key={index} data={item} />
+          ))}
         </div>
-      )}
-      {toggleChat && (
-        <form action="" className="border" onSubmit={handleMessageEnd}>
-          <input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="type your message"
-            type="text"
-            className=" p-1 w-full h-10 focus:border-none focus:outline-none pl-3 border-slate-950"
-          />
-        </form>
-      )}
+      </div>
+
+      <form action="" className="border w-full" onSubmit={handleMessageEnd}>
+        <input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="type your message"
+          type="text"
+          className=" p-1 w-full h-10 focus:border-none focus:outline-none pl-3 border-slate-950"
+        />
+      </form>
     </div>
   );
 };

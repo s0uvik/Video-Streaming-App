@@ -3,19 +3,28 @@ import { YOUTUBE_API } from "../utils/constant";
 import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
 import ShimmerUi from "./ShimmerUi";
+import useFetchData from "../utils/hooks/useFetchData";
+import { useDispatch } from "react-redux";
+import { homeResultsAction } from "../utils/store/homeResultsSlice";
 
 const VideoContainer = () => {
   const [video, setVideo] = useState([]);
+  const dispatch = useDispatch();
 
-  const fetchVideoData = async () => {
-    const res = await fetch(YOUTUBE_API);
-    const data = await res.json();
-    setVideo(data.items);
-  };
+  // const fetchVideoData = async () => {
+  //   const res = await fetch(YOUTUBE_API);
+  //   const data = await res.json();
+  //   setVideo(data.items);
+  // };
 
   useEffect(() => {
-    fetchVideoData();
+    // fetchVideoData();
+
+    // using custom hook
+    useFetchData(YOUTUBE_API).then((data) => setVideo(data.results.items));
   }, []);
+
+  dispatch(homeResultsAction.storeResults(video));
 
   if (video?.length == 0) return <ShimmerUi />;
 

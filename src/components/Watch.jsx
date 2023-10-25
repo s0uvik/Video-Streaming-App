@@ -1,41 +1,73 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import LiveChat from "./LiveChat";
-import { SEARCH_BY_ID_API } from "../utils/constant";
+import { useSelector } from "react-redux";
+import ReactPlayer from "react-player";
+import { BiUserCircle } from "react-icons/bi";
+import {
+  AiOutlineDislike,
+  AiOutlineLike,
+  AiFillLike,
+  AiFillDislike,
+  AiFillSave,
+} from "react-icons/ai";
+
 const Watch = () => {
+  const [like, setLike] = useState(false);
+  const [disLike, setDisLike] = useState(false);
   const [searchParams] = useSearchParams();
+  const videoId = searchParams.get("v");
 
-  const fetchVideoData = async () => {
-    // const res = await fetch(SEARCH_BY_ID_API + searchParams.get("v"));
-    const res = await fetch("https://youtube.googleapis.com/youtube/v3/videos?&id=Ks-_Mh1QhMc&key=AIzaSyAziYvxwSMAzW8mXzSlO1fMvYS_8ctUDLY");
-    console.log(res)
-    const data = await res.json();
-    console.log(data)
-  };
-
-  useEffect(() => {
-    fetchVideoData()
-  }, [searchParams.get("v")])
+  const homePageResults = useSelector((state) => state.homeResults.homeResults);
+  console.log(homePageResults);
 
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-between items-center w-full gap-9 mt-4 ">
-      <iframe
-        className=" lg:h-[500px] lg:w-[900px] md:ml-4 w-full p-2"
-        width="560"
-        height="315"
-        src={"https://www.youtube.com/embed/" + searchParams.get("v")}
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer;
-            autoplay;
-             clipboard-write;
-              encrypted-media; gyroscope;
-               picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+    <main className=" w-full flex gap-4 flex-col justify-center items-center lg:flex-row lg:items-start ">
+      <div className=" w-[97%]">
+        <section className=" w-[100%] h-[350px] md:h-[450px] lg:h-[550px]">
+          <ReactPlayer
+            controls={true}
+            width="100%"
+            height="100%"
+            url={"https://www.youtube.com/watch?v=" + videoId}
+          />
+        </section>
+
+        <section className=" flex justify-between items-center py-3 border shadow-md w-full">
+          <span className=" flex items-center gap-6 pl-4">
+            <BiUserCircle className=" text-5xl font-normal" />
+            <h1 className=" font-semibold text-lg">Channel Name</h1>
+          </span>
+
+          <div className=" flex gap-9 item-center md:mr-10">
+            <span
+              onClick={() => {
+                setLike(!like);
+                setDisLike(false);
+              }}
+              className=" text-2xl cursor-pointer"
+            >
+              {like ? <AiFillLike /> : <AiOutlineLike />}
+            </span>
+            <span
+              onClick={() => {
+                setDisLike(!disLike);
+                setLike(false);
+              }}
+              className=" text-2xl cursor-pointer"
+            >
+              {disLike ? <AiFillDislike /> : <AiOutlineDislike />}
+            </span>
+
+            <span className=" text-2xl cursor-pointer">
+              <AiFillSave />
+            </span>
+          </div>
+        </section>
+      </div>
 
       <LiveChat />
-    </div>
+    </main>
   );
 };
 
